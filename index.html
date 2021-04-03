@@ -19,7 +19,7 @@ Holanda
 -->
 </ol >
 
-<p> ¡Quiero ver más pokémon! </p>
+<button id = "boton"> ¡Quiero ver más pokémon! </button>
 
 <script>
 
@@ -37,16 +37,49 @@ Holanda
             //     alert( 'Información adicional del elemento' );
             // });
             var li = document.createElement('li');
-            li.appendChild(document.createTextNode(`${pokemon.name}`+" -----------> ¡Quiero saber más de este pokémon!"));
+            li.appendChild(document.createTextNode(`${pokemon.name}`));
+            var but = document.createElement('button');
+            but.appendChild(document.createTextNode("¡Quiero saber más de este pokémon!"));
+            li.appendChild(but);
             lista.appendChild(li);
-
-
-
         });
 
       }
     }
   );
+var offset_pokemones = 20;
+
+  boton.addEventListener( 'click' , function (){
+    alert( `20 pokemones mas a su orden. trayendo desde el ${offset_pokemones}` );
+    $.ajax(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=${offset_pokemones}` , {
+        success: function (data) {
+          // console.log(data);
+          // console.log(data['results']);
+          // console.log(data.results);
+          pokemones_next = data.results;
+          pokemones_next.forEach((pokemon, i) => {
+              console.log(pokemon.name);
+              var lista = document.querySelector('#lista');
+              // lista.addEventListener( 'click' , function (){
+              //     alert( 'Información adicional del elemento' );
+              // });
+              var li = document.createElement('li');
+              li.appendChild(document.createTextNode(`${pokemon.name}`));
+              var but = document.createElement('button');
+              but.appendChild(document.createTextNode("¡Quiero saber más de este pokémon!"));
+              li.appendChild(but);
+              lista.appendChild(li);
+          });
+          offset_pokemones +=20;
+
+        }
+      }
+    );
+
+});
+
+
+
 </script>
 
 
